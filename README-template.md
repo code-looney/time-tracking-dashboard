@@ -47,6 +47,8 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 
 ## My process
 
+Implementing the background icons was pretty hair pulling becuase i had to do it dynamicly and it wouldend work on the div element. So i decided to use img instead and everthing worked as aspected!
+
 ### Built with
 
 - Semantic HTML5 markup

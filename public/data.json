@@ -3,7 +3,7 @@
     "title": "Work",
     "timeframes": {
       "daily": {
-        "current": 5,
+        "current": "work",
         "previous": 7
       },
       "weekly": {

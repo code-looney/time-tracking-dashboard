@@ -10,26 +10,69 @@ const Cards = () => {
     const [patern, setPatern] = useState({
         endpoint: {
             work: 'work',
-            play: 'play'
+            play: 'play',
+            study: 'study',
+            exercise: 'exercise',
+            social: 'social',
+            selfCare: 'self-care'
         }
     });
+    const colors = [ 
+        'bg-work', 
+        'bg-play', 
+        'bg-study', 
+        'bg-exercise', 
+        'bg-social', 
+        'bg-self-care' 
+    ]
 
     useEffect(() => {
         fetch(`./data.json`)
         .then(res => res.json())
         .then(data => {
-            // console.log(data[0].patern) 
             setList(data)
         })
     }, [])
-    // public/images/icon-work.svg
-
     
+    function handleCardIcon(index) {
+        if (index === 0) {
+            return patern.endpoint.work
+        } else if (index === 1) {
+            return patern.endpoint.play
+        } else if (index === 2) {
+            return patern.endpoint.study
+        } else if (index === 3) {
+            return patern.endpoint.exercise
+        } else if (index === 4) {
+            return patern.endpoint.social
+        } else if (index === 5) {
+            return patern.endpoint.selfCare
+        } 
+    }
+
+    function handleCardBackgroundColor(index) {
+        if (index === 0) {
+            return 'work'
+        } else if (index === 1) {
+            return 'play'
+        } else if (index === 2) {
+            return 'study'
+        } else if (index === 3) {
+            return 'exercise'
+        }
+    }
+
   return (
-    <Container className={`h-screen w-full outline`}>
-        <ul className={`grid place-content-center gap-10`}>
+    <Container className={`h-screen flex justify-center items-center`}>
+        <ul className={`flex flex-col gap-10`}>
             {list && list.map((item, index) => <li key={index}>
-            <Card className={`outline bg-[url('/public/images/icon-${(index === 0) ? patern.endpoint.work : (item.title === 'Play') ? patern.endpoint.play : ''}.svg')] bg-no-repeat bg-right-top bg-[length:40px_40px]`}>
+            <Card className={`outline bg-${handleCardBackgroundColor(index)} relative`}>
+                <Container className={`absolute outline right-0`}>
+                    <img 
+                    className={`bg-no-repeat bg-right-top w-[30px] flex`} 
+                    src={`./images/icon-${handleCardIcon(index)}.svg`} 
+                    alt="" />
+                    </Container>
                 <Card className={`text-white outline translate-y-5`}> {/* data op bases van index en niet in the return statement via the item check */}
                     <Container>
                         <Title>{item.title}</Title>
