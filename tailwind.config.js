@@ -8,6 +8,7 @@ export default {
     extend: {
       colors: {
        'very-dark-blue': 'hsl(226, 43%, 10%)',
+       'pale-blue': ' hsl(236, 100%, 87%)',
        'card-primary': 'hsl(235, 46%, 20%)',
        'blue': 'hsl(246, 80%, 60%)',
        'work': 'hsl(15, 100%, 70%)',

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { BsThreeDots } from "react-icons/bs";
+import { BsThreeDots } from "react-icons/bs"
 import Container from './Container'
 import Card from './Card'
 import Title from './Title'
 import Sub from './Sub'
+import Portait from '../Portait'
+import { NavLink } from 'react-router-dom'
 
 const Cards = () => {
     const [list, setList] = useState(null);
@@ -30,7 +32,6 @@ const Cards = () => {
         fetch(`./data.json`)
         .then(res => res.json())
         .then(data => {
-            console.log(data)
             setList(data)
         })
     }, [])
@@ -68,15 +69,27 @@ const Cards = () => {
     }
 
   return (
-    <Container className={`flex flex-col justify-center items-center relative`}>
+    <Container className={`flex flex-col h-screen justify-center items-center relative`}>
         <Container className={`flex flex-col items-center justify-center`}>
-            <Container>
-                <Card className={` bg-blue w-[250px] rounded-xl relative`}>
-                    <Card className={`text-white bg-card-primary flex justify-center rounded-xl translate-y-7`}>
-                    </Card>
-                </Card>
-            </Container>
             <ul className={`flex flex-col gap-11`}>
+            <li>
+                <Card className={` bg-blue w-[250px] rounded-xl relative`}>
+                        <Container className={`flex gap-3 py-6 px-5 items-center text-white`}>
+                            <Portait src={`public/images/image-jeremy.png`} className={`w-[50px] border-2 rounded-full border-white`} />
+                             <Container className={`leading-4`}>
+                                 <Title>Report for</Title>
+                                 <Sub>Jeremy Robson</Sub>
+                             </Container>
+                        </Container>
+                        <Card className={`bg-card-primary flex justify-center rounded-b-xl `}>
+                            <Container className={`flex gap-12 p-3 text-[12px]`}>
+                                <NavLink className={`text-pale-blue hover:text-white focus:text-white`} href="#">Daily</NavLink>
+                                <NavLink className={`text-pale-blue hover:text-white focus:text-white`} href="#">Weekly</NavLink>
+                                <NavLink className={`text-pale-blue hover:text-white focus:text-white`} href="#">Monthly</NavLink>
+                            </Container>
+                        </Card>
+                    </Card>
+                </li>
                 {list && list.map((item, index) => <li key={index}>
                 <Card className={`w-[250px] rounded-xl bg-${handleCardBackgroundColor(index)} relative`}>
                     <Container className={`absolute right-0`}>
@@ -89,11 +102,11 @@ const Cards = () => {
                         <Container className={`w-[220px] h-[100px] flex justify-between items-center`}>
                             <Container>
                                 <Title className={`text-[18px] font-medium`}>{item.title}</Title>
-                                <Sub className={`uppercase text-[20px] font-thin`}>{item.timeframes.weekly.current}hrs</Sub>
+                                <Sub className={`uppercase text-[20px] font-thin`}>{}hrs</Sub>
                             </Container>
                             <Container className={`flex flex-col gap-3 items-end`}>
                                 <BsThreeDots className={`text-[21px]`} />
-                                <Sub>Last week - {item.timeframes.weekly.previous}hrs</Sub>
+                                <Sub>Last week - {}hrs</Sub>
                             </Container>
                         </Container>
                     </Card>
