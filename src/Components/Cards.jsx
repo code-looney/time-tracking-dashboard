@@ -9,6 +9,7 @@ import { NavLink } from 'react-router-dom'
 
 const Cards = () => {
     const [list, setList] = useState(null);
+    const [day, setDay] = useState([]);
     const [patern, setPatern] = useState({
         endpoint: {
             work: 'work',
@@ -27,6 +28,7 @@ const Cards = () => {
         'bg-social', 
         'bg-self-care' 
     ]
+    const daily = 'daily'
 
     useEffect(() => {
         fetch(`./data.json`)
@@ -35,6 +37,17 @@ const Cards = () => {
             setList(data)
         })
     }, [])
+
+
+    useEffect(() => {
+        fetch(`./data.json`)
+        .then(res => res.json())
+        .then(data => {
+                const dailyValue = data.map(item => item.timeframes.daily.current)
+                setDay(dailyValue)
+            })
+    }, [])
+
     
     function handleCardIcon(index) {
         if (index === 0) {
@@ -68,12 +81,21 @@ const Cards = () => {
         }
     }
 
+    function handleCurrClick(index) {
+        if (index === 0) {
+            return day[0]
+        } else if (index === 1) {
+            return day[1]
+        }
+        // do the same as all the other index
+    }
+
   return (
     <Container className={`flex flex-col h-screen justify-center items-center relative`}>
         <Container className={`flex flex-col items-center justify-center`}>
             <ul className={`flex flex-col gap-11`}>
             <li>
-                <Card className={` bg-blue w-[250px] rounded-xl relative`}>
+                <Card className={`bg-blue w-[250px] rounded-xl relative`}>
                         <Container className={`flex gap-3 py-6 px-5 items-center text-white`}>
                             <Portait src={`public/images/image-jeremy.png`} className={`w-[50px] border-2 rounded-full border-white`} />
                              <Container className={`leading-4`}>
@@ -96,17 +118,17 @@ const Cards = () => {
                         <img
                         className={`bg-no-repeat bg-right-top w-[40px] flex`}
                         src={`./images/icon-${handleCardIcon(index)}.svg`}
-                        alt="" />
+                        alt="" /> 
                         </Container>
                     <Card className={`text-white bg-card-primary flex justify-center rounded-xl translate-y-7`}>
                         <Container className={`w-[220px] h-[100px] flex justify-between items-center`}>
                             <Container>
                                 <Title className={`text-[18px] font-medium`}>{item.title}</Title>
-                                <Sub className={`uppercase text-[20px] font-thin`}>{}hrs</Sub>
+                                <Sub className={`uppercase text-[20px] font-thin`}>{handleCurrClick(index)}hrs</Sub>
                             </Container>
                             <Container className={`flex flex-col gap-3 items-end`}>
                                 <BsThreeDots className={`text-[21px]`} />
-                                <Sub>Last week - {}hrs</Sub>
+                                <Sub>Last week - {item.timeframes.daily.previous}hrs</Sub>
                             </Container>
                         </Container>
                     </Card>
